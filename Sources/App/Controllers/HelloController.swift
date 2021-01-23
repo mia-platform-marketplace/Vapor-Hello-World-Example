@@ -45,7 +45,7 @@ struct HelloController: RouteCollection {
         let helloGet = try req.query.decode(HelloGet.self)
         let ridersURI = URI(string: "https://demo.test.mia-platform.eu/v2/riders/")
         
-        return req.client.get(ridersURI)
+        return req.client.get(ridersURI, headers: req.miaHeaders)
             .flatMapThrowing { response -> [Rider] in
                 if response.status != .ok {
                     throw Error.CRUDCallError("Cannot get riders")
