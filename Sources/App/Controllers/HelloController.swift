@@ -3,7 +3,8 @@ import Vapor
 struct HelloController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let helloRoutes = routes
-            .grouped(QueryParamTokenAuthenticator())
+            .grouped(ExampleUserAuthenticator())
+            .grouped(User.guardMiddleware())
             .grouped("hello")
         
         helloRoutes.get(use: index)
@@ -13,12 +14,12 @@ struct HelloController: RouteCollection {
     
     func index(req: Request) throws -> Hello {
         let user = try req.auth.require(User.self)
-        let helloGet = try req.query.decode(HelloGet.self)
+        let helloGetRequest = try req.query.decode(HelloGetRequest.self)
         
         return Hello(
             tokenSent: user.token,
             pathParamSent: nil,
-            queryParamSent: helloGet.queryParam,
+            queryParamSent: helloGetRequest.queryParam,
             riders: nil,
             message: "Hello, world!"
         )
@@ -27,7 +28,7 @@ struct HelloController: RouteCollection {
     func post(req: Request) throws -> Hello {
         let user = try req.auth.require(User.self)
         do {
-            let body = try req.content.decode(HelloPost.Body.self)
+            let body = try req.content.decode(HelloPostRequest.Body.self)
             return Hello(
                 tokenSent: user.token,
                 pathParamSent: req.parameters.get("pathParam"),
@@ -42,7 +43,7 @@ struct HelloController: RouteCollection {
     
     func withRiders(req: Request) throws -> EventLoopFuture<Hello> {
         let user = try req.auth.require(User.self)
-        let helloGet = try req.query.decode(HelloGet.self)
+        let helloGetRequest = try req.query.decode(HelloGetRequest.self)
         let ridersURI = URI(string: "https://demo.test.mia-platform.eu/v2/riders/")
         
         return req.client.get(ridersURI, headers: req.miaHeaders)
@@ -60,7 +61,7 @@ struct HelloController: RouteCollection {
                 return Hello(
                     tokenSent: user.token,
                     pathParamSent: nil,
-                    queryParamSent: helloGet.queryParam,
+                    queryParamSent: helloGetRequest.queryParam,
                     riders: riders,
                     message: "Hello, world!"
                 )

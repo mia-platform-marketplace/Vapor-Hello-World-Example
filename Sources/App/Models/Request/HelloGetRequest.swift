@@ -1,6 +1,6 @@
 import Vapor
 
-struct HelloGet: Content {
+struct HelloGetRequest: Content {
     var token: String?
     var queryParam: String?
 }

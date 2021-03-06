@@ -4,7 +4,7 @@ struct User: Authenticatable {
     var token: String
 }
 
-struct QueryParamTokenAuthenticator: RequestAuthenticator {
+struct ExampleUserAuthenticator: RequestAuthenticator {
     func authenticate(request: Request) -> EventLoopFuture<Void> {
         if let token: String = request.query["token"], token != "invalid" {
             request.auth.login(User(token: token))
