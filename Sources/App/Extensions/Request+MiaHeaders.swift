@@ -1,5 +1,4 @@
 import Vapor
-import XCTVapor
  
 public struct MiaHeaders {
     private static let requestIdKey = "x-request-id"
@@ -22,21 +21,15 @@ public struct MiaHeaders {
         }
     }
     
-    public static func from(_ request: Request) -> HTTPHeaders {
+    public static func from(_ requestHeaders: HTTPHeaders) -> HTTPHeaders {
         miaHeaderKeys.reduce(into: HTTPHeaders()) { headers, miaHeaderKey in
-            addHeader(withKey: miaHeaderKey, from: request.headers, to: &headers)
-        }
-    }
-    
-    public static func from(_ request: XCTHTTPRequest) -> HTTPHeaders {
-        miaHeaderKeys.reduce(into: HTTPHeaders()) { headers, miaHeaderKey in
-            addHeader(withKey: miaHeaderKey, from: request.headers, to: &headers)
+            addHeader(withKey: miaHeaderKey, from: requestHeaders, to: &headers)
         }
     }
 }
 
 extension Request {
     var miaHeaders: HTTPHeaders {
-        MiaHeaders.from(self)
+        MiaHeaders.from(self.headers)
     }
 }

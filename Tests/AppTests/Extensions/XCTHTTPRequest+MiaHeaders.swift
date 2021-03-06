@@ -1,8 +1,8 @@
-import XCTVapor
 import App
+import XCTVapor
 
 extension XCTHTTPRequest {
     var miaHeaders: HTTPHeaders {
-        MiaHeaders.from(self)
+        MiaHeaders.from(self.headers)
     }
 }
