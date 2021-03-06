@@ -28,7 +28,9 @@ struct HelloController: RouteCollection {
     func post(req: Request) throws -> Hello {
         let user = try req.auth.require(User.self)
         do {
+            try HelloPostRequest.Body.validate(content: req)
             let body = try req.content.decode(HelloPostRequest.Body.self)
+            
             return Hello(
                 tokenSent: user.token,
                 pathParamSent: req.parameters.get("pathParam"),
