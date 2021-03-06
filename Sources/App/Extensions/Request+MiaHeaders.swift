@@ -13,7 +13,7 @@ public struct MiaHeaders {
         .map { $0.trimmingCharacters(in: [" "]) }
         ?? []
     
-    private static let keys = [requestIdKey, userIdKey, groupsKey, clientTypeKey, backofficeKey, userPropertiesKey] + additionalHeaderKeys
+    private static let miaHeaderKeys = [requestIdKey, userIdKey, groupsKey, clientTypeKey, backofficeKey, userPropertiesKey] + additionalHeaderKeys
     
     private static func addHeader(withKey key: String, from originalHeaders: HTTPHeaders, to headers: inout HTTPHeaders) {
         let headerValue = originalHeaders.first(name: key)
@@ -23,13 +23,13 @@ public struct MiaHeaders {
     }
     
     public static func from(_ request: Request) -> HTTPHeaders {
-        keys.reduce(into: HTTPHeaders()) { headers, miaHeaderKey in
+        miaHeaderKeys.reduce(into: HTTPHeaders()) { headers, miaHeaderKey in
             addHeader(withKey: miaHeaderKey, from: request.headers, to: &headers)
         }
     }
     
     public static func from(_ request: XCTHTTPRequest) -> HTTPHeaders {
-        keys.reduce(into: HTTPHeaders()) { headers, miaHeaderKey in
+        miaHeaderKeys.reduce(into: HTTPHeaders()) { headers, miaHeaderKey in
             addHeader(withKey: miaHeaderKey, from: request.headers, to: &headers)
         }
     }
