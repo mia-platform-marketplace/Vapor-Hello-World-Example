@@ -1,8 +1,8 @@
-# Vapor Hello World Example
+# mia_template_service_name_placeholder 
 
 ## Summary
 
-Welcome to Vapor Hello World application.
+%CUSTOM_PLUGIN_SERVICE_DESCRIPTION%
 
 This is an example of a simple [Vapor](https://docs.vapor.codes/4.0/) microservice showing requests handling, requests validation, authentication, and how to perform network calls within a route handler.
 
@@ -57,9 +57,10 @@ If you need to set custom env variables, create your local copy of the default v
 ```bash
 cp .env .env.dev
 ```
-From now on, if you want to change anyone of the default values for the variables you can do it inside the `.env.dev` file without pushing it to the remote repository.
+From now on, if you want to change any of the default values for the variables you can do it inside the `.env.dev` file without pushing it to the remote repository.
 
 ```bash
+set -a && source .env.dev
 swift run
 ```
 After that you will have the service exposed on your machine. In order to verify that the service is working properly you could launch in another terminal shell:
