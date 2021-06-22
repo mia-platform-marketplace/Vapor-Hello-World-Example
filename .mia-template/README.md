@@ -30,6 +30,15 @@ Install [Swift](https://swift.org/getting-started/).
 
 If you are on macOS, set a custom working directory in the Xcode scheme for your project as described in [Vapor's doc](https://docs.vapor.codes/4.0/xcode/#custom-working-directory).
 
+### Lint
+
+Install [SwiftLint](https://github.com/realm/SwiftLint).
+
+```bash
+swiftlint ./Sources
+```
+If you need to edit the lint rules here is the rule directory reference: https://realm.github.io/SwiftLint/rule-directory.html
+
 ### Test
 
 ```bash

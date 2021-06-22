@@ -20,19 +20,19 @@ final class MiaHeadersProxyTests: XCTestCase {
         })
         
         // MARK: - miaHeaders contains the correct headers when miauserid has a value
-        headers = ["miauserid": "userid"]
+        headers = ["userid": "miauserid"]
         try app.test(.GET, "proxy-headers", headers: headers,  beforeRequest: { req in
             XCTAssertEqual(req.miaHeaders, headers)
         })
         
         // MARK: - miaHeaders contains the correct headers when miausergroups has a value
-        headers = ["miausergroups": "usergroups"]
+        headers = ["usergroups": "miausergroups"]
         try app.test(.GET, "proxy-headers", headers: headers,  beforeRequest: { req in
             XCTAssertEqual(req.miaHeaders, headers)
         })
         
         // MARK: - miaHeaders contains the correct headers when client-type has a value
-        headers = ["client-type": "type"]
+        headers = ["clienttype": "type"]
         try app.test(.GET, "proxy-headers", headers: headers,  beforeRequest: { req in
             XCTAssertEqual(req.miaHeaders, headers)
         })
@@ -44,7 +44,7 @@ final class MiaHeadersProxyTests: XCTestCase {
         })
         
         // MARK: - miaHeaders contains the correct headers when miauserproperties has a value
-        headers = ["miauserproperties": "property"]
+        headers = ["userproperties": "property"]
         try app.test(.GET, "proxy-headers", headers: headers,  beforeRequest: { req in
             XCTAssertEqual(req.miaHeaders, headers)
         })
@@ -52,11 +52,11 @@ final class MiaHeadersProxyTests: XCTestCase {
         // MARK: - miaHeaders contains the correct headers when all platform headers have value
         let allMiaHeaders: HTTPHeaders = [
             "x-request-id": "1234abcd",
-            "miauserid": "userid",
-            "miausergroups": "usergroups",
-            "client-type": "type",
+            "userid": "miauserid",
+            "usergroups": "miausergroups",
+            "clienttype": "type",
             "isbackoffice": "true",
-            "miauserproperties": "property"
+            "userproperties": "property"
         ]
         try app.test(.GET, "proxy-headers", headers: allMiaHeaders,  beforeRequest: { req in
             XCTAssertEqual(req.miaHeaders, allMiaHeaders)
@@ -65,11 +65,11 @@ final class MiaHeadersProxyTests: XCTestCase {
         // MARK: - miaHeaders contains only headers to proxy when there are more
         headers = [
             "x-request-id": "1234abcd",
-            "miauserid": "userid",
-            "miausergroups": "usergroups",
-            "client-type": "type",
+            "userid": "miauserid",
+            "usergroups": "miausergroups",
+            "clienttype": "type",
             "isbackoffice": "true",
-            "miauserproperties": "property",
+            "userproperties": "property",
             "some-other-header": "other"
         ]
         try app.test(.GET, "proxy-headers", headers: headers,  beforeRequest: { req in
@@ -79,11 +79,11 @@ final class MiaHeadersProxyTests: XCTestCase {
         // MARK: - miaHeaders contains the additional headers to proxy if present
         headers = [
             "x-request-id": "1234abcd",
-            "miauserid": "userid",
-            "miausergroups": "usergroups",
-            "client-type": "type",
+            "userid": "miauserid",
+            "usergroups": "miausergroups",
+            "clienttype": "type",
             "isbackoffice": "true",
-            "miauserproperties": "property",
+            "userproperties": "property",
             "header-to-proxy-1": "proxy-1",
             "header-to-proxy-2": "proxy-2"
         ]
