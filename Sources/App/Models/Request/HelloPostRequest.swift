@@ -1,6 +1,6 @@
 import Vapor
 
-struct HelloPostRequest {
+enum HelloPostRequest {
     struct Body: Content {
         var firstname: String
         var lastname: String

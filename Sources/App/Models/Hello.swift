@@ -6,7 +6,7 @@ struct Hello: Content {
     var queryParamSent: String?
     var riders: [Rider]?
     var message: String
-    
+
     internal init(tokenSent: String?, pathParamSent: String?, queryParamSent: String?, riders: [Rider]?, message: String) {
         self.tokenSent = tokenSent
         self.pathParamSent = pathParamSent

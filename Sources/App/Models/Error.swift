@@ -1,27 +1,24 @@
 import Vapor
 
 enum Error {
-    case CRUDCallError(String)
-    case ModelDecodingError(String)
-    case RequestDecodingError(String)
+    case crudCallError(String)
+    case modelDecodingError(String)
+    case requestDecodingError(String)
 }
 
 extension Error: AbortError {
     var status: HTTPResponseStatus {
         switch self {
-        case .CRUDCallError,
-             .ModelDecodingError:
+        case .crudCallError, .modelDecodingError:
             return .internalServerError
-        case .RequestDecodingError:
+        case .requestDecodingError:
             return .badRequest
         }
     }
-    
+
     var reason: String {
         switch self {
-        case .CRUDCallError(let message),
-             .ModelDecodingError(let message),
-             .RequestDecodingError(let message):
+        case .crudCallError(let message), .modelDecodingError(let message), .requestDecodingError(let message):
             return message
         }
     }
