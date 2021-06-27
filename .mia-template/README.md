@@ -26,7 +26,7 @@ This is an example of a simple [Vapor](https://docs.vapor.codes/4.0/) microservi
 
 ## Local Development
 
-Install [Swift](https://swift.org/getting-started/).
+Install [Swift](https://swift.org/getting-started/) (5.4 or newer).
 
 If you are on macOS, set a custom working directory in the Xcode scheme for your project as described in [Vapor's doc](https://docs.vapor.codes/4.0/xcode/#custom-working-directory).
 
@@ -42,7 +42,7 @@ If you need to edit the lint rules here is the rule directory reference: https:/
 ### Test
 
 ```bash
-swift test --enable-test-discovery
+swift test
 ```
 
 ### Build
@@ -50,6 +50,17 @@ swift test --enable-test-discovery
 ```bash
 swift build
 ```
+
+### Update package version
+
+```bash
+swift run Run version [--number <your new version>] [--patch] [--minor] [--major] [-h|--help]
+
+# Example:
+# swift run Run version --number 2.1.0
+# swift run Run version --patch
+```
+This command tags a new version of your package and update the `CHANGELOG.md` accordingly.
 
 ### Run
 

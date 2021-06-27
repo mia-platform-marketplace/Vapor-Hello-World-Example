@@ -5,10 +5,12 @@ public func configure(_ app: Application) throws {
     // uncomment to serve files from /Public folder
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
+    app.commands.use(UpdateVersionCommand(), as: "version")
+
     if let port = Environment.get("HTTP_PORT") {
         app.http.server.configuration.port = Int(port) ?? 8080
     }
 
     // register routes
-    try routes( app )
+    try routes(app)
 }
