@@ -4,24 +4,24 @@
 
 %CUSTOM_PLUGIN_SERVICE_DESCRIPTION%
 
-This is an example of a simple [Vapor](https://docs.vapor.codes/4.0/) microservice showing requests handling, requests validation, authentication, and how to perform network calls within a route handler.
+This is an example of a simple [Vapor](https://docs.vapor.codes/4.0/) microservice showing requests handling, authentication, and how to perform network calls within a route handler.
 
 #### Defined endpoints
 
 ```bash
-+------+--------------------+
-| GET  | /-/healthz         |
-+------+--------------------+
-| GET  | /-/ready           |
-+------+--------------------+
-| GET  | /-/check-up        |
-+------+--------------------+
-| GET  | /hello             |
-+------+--------------------+
-| POST | /hello/:pathParam  |
-+------+--------------------+
-| GET  | /hello/with-riders |
-+------+--------------------+
++------+----------------------+
+| GET  | /-/healthz           |
++------+----------------------+
+| GET  | /-/ready             |
++------+----------------------+
+| GET  | /-/check-up          |
++------+----------------------+
+| GET  | /hello               |
++------+----------------------+
+| POST | /hello/:pathParam    |
++------+----------------------+
+| GET  | /hello/with-datetime |
++------+----------------------+
 ```
 
 ## Local Development
