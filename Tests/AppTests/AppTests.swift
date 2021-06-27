@@ -7,10 +7,11 @@ final class AppTests: XCTestCase {
         defer { app.shutdown() }
         try configure(app)
 
+        // swiftlint:disable trailing_closure
         try app.test(.GET, "hello?token=invalid", afterResponse: { res in
             XCTAssertEqual(res.status, .unauthorized)
         })
-        
+
         try app.test(.GET, "hello?token=good", afterResponse: { res in
             XCTAssertEqual(res.status, .ok)
             let hello = try res.content.decode(Hello.self)
