@@ -9,7 +9,7 @@ struct HelloController: RouteCollection {
 
         helloRoutes.get(use: index)
         helloRoutes.post(":pathParam", use: post)
-        helloRoutes.get("with-riders", use: withRiders)
+        helloRoutes.get("with-datetime", use: withDatetime)
     }
 
     func index(req: Request) throws -> Hello {
@@ -20,7 +20,7 @@ struct HelloController: RouteCollection {
             tokenSent: user.token,
             pathParamSent: nil,
             queryParamSent: helloGetRequest.queryParam,
-            riders: nil,
+            datetime: nil,
             message: "Hello, world!"
         )
     }
@@ -35,7 +35,7 @@ struct HelloController: RouteCollection {
                 tokenSent: user.token,
                 pathParamSent: req.parameters.get("pathParam"),
                 queryParamSent: nil,
-                riders: nil,
+                datetime: nil,
                 message: "Hello, \(body.firstname) \(body.lastname)!"
             )
         } catch let error as DecodingError {
@@ -43,28 +43,28 @@ struct HelloController: RouteCollection {
         }
     }
 
-    func withRiders(req: Request) throws -> EventLoopFuture<Hello> {
+    func withDatetime(req: Request) throws -> EventLoopFuture<Hello> {
         let user = try req.auth.require(User.self)
         let helloGetRequest = try req.query.decode(HelloGetRequest.self)
-        let ridersURI = URI(string: "https://demo.test.mia-platform.eu/v2/riders/")
+        let datetimeURI = URI(string: "http://worldtimeapi.org/api/ip")
 
-        return req.client.get(ridersURI, headers: req.miaHeaders)
-            .flatMapThrowing { response -> [Rider] in
+        return req.client.get(datetimeURI, headers: req.miaHeaders)
+            .flatMapThrowing { response -> Datetime in
                 if response.status != .ok {
-                    throw Error.crudCallError("Cannot get riders")
+                    throw Error.crudCallError("Cannot get datetime")
                 }
                 do {
-                    return try response.content.decode([Rider].self)
+                    return try response.content.decode(Datetime.self)
                 } catch let error as DecodingError {
-                    throw Error.modelDecodingError("Cannot decode [Rider] - \(error.description)")
+                    throw Error.modelDecodingError("Cannot decode Datetime - \(error.description)")
                 }
             }
-            .map { riders in
+            .map { datetime in
                 return Hello(
                     tokenSent: user.token,
                     pathParamSent: nil,
                     queryParamSent: helloGetRequest.queryParam,
-                    riders: riders,
+                    datetime: datetime,
                     message: "Hello, world!"
                 )
             }

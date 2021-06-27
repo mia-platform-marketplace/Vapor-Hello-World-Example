@@ -9,10 +9,4 @@ struct Health: Content {
         case OK
         case KO
     }
-
-    init(serviceName: String, version: String, status: Status) {
-        self.serviceName = serviceName
-        self.version = version
-        self.status = status
-    }
 }
