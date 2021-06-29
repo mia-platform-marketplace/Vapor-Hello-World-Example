@@ -54,7 +54,9 @@ struct UpdateVersionCommand: Command {
             }
         } else {
             // Get latest version
-            var latestVersion = (try? Shell.run(command: "git describe --tags $(git rev-list --tags --max-count=1)")) ?? "0.0.0"
+            var latestVersion = (
+                try? Shell.run(command: "git describe --tags $(git rev-list --tags --max-count=1)")
+            ) ?? "0.0.0"
             var prohibitedCharacters = CharacterSet.letters
             prohibitedCharacters.formUnion(.controlCharacters)
             prohibitedCharacters.formUnion(.whitespaces)
