@@ -41,17 +41,7 @@ struct UpdateVersionCommand: Command {
     }
 
     private func getNewVersion(context: CommandContext, signature: Signature) throws -> String {
-        // Get latest version
-        var latestVersion = try Shell.run(command: "git describe --tags $(git rev-list --tags --max-count=1)")
-        var prohibitedCharacters = CharacterSet.letters
-        prohibitedCharacters.formUnion(.controlCharacters)
-        prohibitedCharacters.formUnion(.whitespaces)
-        prohibitedCharacters.formUnion(.symbols)
-        latestVersion = latestVersion.trimmingCharacters(in: prohibitedCharacters)
-
-        // Calculate new version
         var newVersion: String
-        let latestVersionComponents = latestVersion.components(separatedBy: ".")
 
         if let number = signature.number {
             // swiftlint:disable force_try
@@ -63,6 +53,16 @@ struct UpdateVersionCommand: Command {
                 throw RuntimeError.invalidVersion("Unable to proceed: \(number) is not in a valid version format.")
             }
         } else {
+            // Get latest version
+            var latestVersion = (try? Shell.run(command: "git describe --tags $(git rev-list --tags --max-count=1)")) ?? "0.0.0"
+            var prohibitedCharacters = CharacterSet.letters
+            prohibitedCharacters.formUnion(.controlCharacters)
+            prohibitedCharacters.formUnion(.whitespaces)
+            prohibitedCharacters.formUnion(.symbols)
+            latestVersion = latestVersion.trimmingCharacters(in: prohibitedCharacters)
+
+            // Calculate new version
+            let latestVersionComponents = latestVersion.components(separatedBy: ".")
             // swiftlint:disable indentation_width
             guard let patch = Int(latestVersionComponents[2]),
                   let minor = Int(latestVersionComponents[1]),
