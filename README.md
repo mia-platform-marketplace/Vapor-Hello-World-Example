@@ -1,5 +1,7 @@
 # Vapor Hello World Example walkthrough
 
+> ⚠️ Warning: This repository is no longer maintained.
+
 This walkthrough will explain you how to correctly create a microservice that returns an hello message from the DevOps Console.
 
 ## Create a microservice
